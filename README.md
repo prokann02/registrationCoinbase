@@ -40,3 +40,9 @@ If you want to use proxy, provide TXT file splitted by new lines.
 ```
 python main.py --phone-number +380000000000 --captcha-key 000000aa0a000f000c0e00aaa00000a0 --temp-mail-api-key 000a0aa0aa0a0a0a00a00aa0000a000aa0000a0a0a00a0000a --proxy-file proxies.txt
 ```
+<hr>
+<h3>How it works:</h3>
+<video width="600" controls>
+  <source src="readme_sources/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
