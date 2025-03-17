@@ -10,8 +10,11 @@ The application supports custom proxies and <b>requires</b> credentials for 2Cap
 <p><b>1. Install Dependencies:</b></p>
 <code>pip install -r requirements.txt</code>
 
-<p><b>2. Install Playwright:</b></p>
+<p><b>2. Install Playwright.</b></p>
+<p>On Windows:</p>
 <code>playwright install</code>
+<p>On Linux:</p>
+<code>playwright install-deps</code>
 
 <p><b>3. Configure Arguments.</b></p>
 <p>The application requires <a href="https://2captcha.com/uk/enterpage">2Captcha</a> API key, <a href="https://temp-mail.org/uk/api">temp mail</a> API key, phone number and optionally supports proxy settings.</p> 
@@ -25,7 +28,7 @@ REQUIRED: API key for 2Captcha.
 REQUIRED: API key for Temp Mail.
 
 --phone-number OR -n <str:phone_number_to_registrate>
-Phone number must be written with the code. You can enter it like argument or input when start the program.
+You can enter phone number like argument or input when start the program.
 
 --proxy-file OR -f <str:path_to_TXT_file>
 If you want to use proxy, provide TXT file splitted by new lines.
