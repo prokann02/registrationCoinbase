@@ -9,13 +9,23 @@
 <hr>
 <h2>How to Run</h2>
 <p><b>1. Install Dependencies:</b></p>
-<code>pip install -r requirements.txt</code>
+
+```
+pip install -r requirements.txt
+```
 
 <p><b>2. Install Playwright.</b></p>
 <p>On Windows:</p>
-<code>playwright install</code>
+
+```
+playwright install
+```
+
 <p>On Linux:</p>
-<code>playwright install-deps</code>
+
+```
+playwright install-deps
+```
 
 <p><b>3. Configure Arguments.</b></p>
 <p>The application requires <a href="https://2captcha.com/uk/enterpage">2Captcha</a> API key, <a href="https://temp-mail.org/uk/api">temp mail</a> API key, phone number and optionally supports proxy settings.</p> 
