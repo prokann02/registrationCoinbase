@@ -44,5 +44,5 @@ python main.py --phone-number +380000000000 --captcha-key 000000aa0a000f000c0e00
 <hr>
 <h3>How it works:</h3>
 
-[![Watch the video](https://youtu.be/2biH7M1PRKA)](https://youtu.be/2biH7M1PRKA)
+[![Demo](readme_sources/preview.png)](https://youtu.be/2biH7M1PRKA)
 
