@@ -29,10 +29,24 @@ async def start_browser(playwright: Playwright, proxy_file) -> tuple[Browser, Pa
 
         if proxy_file:
             selected_proxy = get_selected_proxy()
-            if selected_proxy.current:
-                proxy_config = {
-                    "server": selected_proxy.get_proxies()["http"],
-                }
+            current = selected_proxy.current
+            if current:
+                server = selected_proxy.get_proxies()["https"]
+
+                # If proxy has username and password
+                if "@" in current:
+                    parts = current.rsplit("@")[0].split("://")[1].split(":")
+                    username, password = parts[0], parts[1]
+                    proxy_config = {
+                        "server": server,
+                        "username": username,
+                        "password": password,
+                    }
+                else:
+                    proxy_config = {
+                        "server": server,
+                    }
+
                 launch_args["proxy"] = proxy_config
 
         # Launch Chromium browser
@@ -40,7 +54,7 @@ async def start_browser(playwright: Playwright, proxy_file) -> tuple[Browser, Pa
 
         # Create a new page
         page = await browser.new_page(
-            viewport={"width": 1340, "height": 800},
+            viewport={"width": 1800, "height": 1200},
             extra_http_headers={
                 "Accept-Language": "en-US,en;q=0.9"
             },

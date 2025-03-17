@@ -1,9 +1,9 @@
 .idea
 .venv
+logs
+screenshots
 
 *.html
-*.log
-*.png
 proxies.txt
 
 .env

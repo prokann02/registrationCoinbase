@@ -61,4 +61,4 @@ async def execute_phone_page(page: Page, phone_number: str, country_code: str, c
 
     await asyncio.sleep(random.uniform(1, 2))
     logger.info("All finished!")
-    await asyncio.sleep(5)
+    await asyncio.sleep(30)
