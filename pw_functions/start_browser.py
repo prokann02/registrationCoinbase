@@ -4,25 +4,15 @@ import sys
 from playwright.async_api import Page, Browser
 from playwright.async_api import Playwright
 
-from config import SECONDS_TIMEOUT, SELECTED_AGENT, LOG_FILE
+from config import SECONDS_TIMEOUT, SELECTED_AGENT
 from helpers.get_proxy import get_selected_proxy
-
-# Logging setup
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
 
 async def start_browser(playwright: Playwright, proxy_file) -> tuple[Browser, Page]:
     """Creates a browser instance with the given settings and added cookies."""
+    logger = logging.getLogger()
+
     try:
-        # async define browser launch arguments
         launch_args = {
             "headless": False,
             "args": [

@@ -4,15 +4,12 @@ import os
 import random
 import time
 
-from playwright.async_api import async_playwright
-
 from config import LOG_DIR, TEMP_MAIL_API_DOMAINS
 from helpers.generate_user_data import generate_user_data
 from helpers.get_input_phone_number import get_input_phone_number
 from helpers.get_proxy import get_proxy
 from helpers.init_args import init_args
-from pw_functions.register_on_coinbase import register_on_coinbase
-from pw_functions.start_browser import start_browser
+from pw_functions.pw_run import pw_run
 
 # Logging setup
 log_file = os.path.join(LOG_DIR, "program.log")
@@ -54,20 +51,13 @@ async def main():
     email = (f"{user_data['first_name'].lower()}__{user_data['last_name'].lower()}{unique_value}"
              f"{random.choice(TEMP_MAIL_API_DOMAINS)}")
 
-    async with async_playwright() as playwright:
-        browser, page = await start_browser(playwright, proxy_file=proxy_file)
-
-        await register_on_coinbase(
-            browser=browser,
-            user_data=user_data,
-            email=email,
-            page=page,
-            proxy_file=proxy_file,
-            temp_mail_api_key=temp_mail_api_key,
-            captcha_api_key=captcha_api_key,
-        )
-
-        await browser.close()
+    await pw_run(
+        proxy_file=proxy_file,
+        user_data=user_data,
+        email=email,
+        temp_mail_api_key=temp_mail_api_key,
+        captcha_api_key=captcha_api_key,
+    )
 
 
 if __name__ == "__main__":

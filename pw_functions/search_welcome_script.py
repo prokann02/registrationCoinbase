@@ -2,22 +2,21 @@ import asyncio
 import logging
 import random
 
-from playwright.async_api import Page, Browser
+from playwright.async_api import Page
 
-from config import SECONDS_TIMEOUT
 from helpers.save_screenshot import save_screenshot
-
-logger = logging.getLogger(__name__)
 
 
 async def search_welcome_script(page: Page):
     """Check for 'Welcome! Who are you creating this account for?' and select 'Individual'."""
+    logger = logging.getLogger(__name__)
+
     try:
         # Wait for the welcome text to appear
         welcome_text = page.locator(
             "xpath=//*[contains(text(), 'Welcome! Who are you creating this account for?')]"
         )
-        await welcome_text.wait_for(timeout=SECONDS_TIMEOUT * 1000)  # Convert to milliseconds
+        await welcome_text.wait_for(timeout=20 * 1000)  # Convert to milliseconds
 
         # Simulate mouse movements
         await page.mouse.move(120, 120)

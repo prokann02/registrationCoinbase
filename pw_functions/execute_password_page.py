@@ -4,23 +4,15 @@ import random
 
 from playwright.async_api import Page, Browser
 
-from config import LOG_FILE, SECONDS_TIMEOUT
+from config import SECONDS_TIMEOUT
 from helpers.save_screenshot import save_screenshot
 from pw_functions.click_on_continue_button import click_on_continue_button
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
 
 async def execute_password_page(browser: Browser, page: Page, user_data):
     """Handle the password entry page."""
+    logger = logging.getLogger()
+
     # Waiting for the password page
     logger.info("Waiting for the password field")
     password_field = page.locator('#confirm-password')

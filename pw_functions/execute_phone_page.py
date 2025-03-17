@@ -4,24 +4,16 @@ import random
 
 from playwright.async_api import Page
 
-from config import LOG_FILE, SECONDS_TIMEOUT
+from config import SECONDS_TIMEOUT
 from helpers.save_screenshot import save_screenshot
 from pw_functions.click_on_continue_button import click_on_continue_button
 from pw_functions.solve_captcha import solve_captcha
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
-
-async def execute_phone_page(page: Page, phone_number: str, country_code: str, captcha_api_key: str, ):
+async def execute_phone_page(page: Page, phone_number: str, country_code: str, captcha_api_key: str):
     """Fill the phone page with country code and number."""
+    logger = logging.getLogger()
+
     # Wait for the phone page to load
     logger.info("Waiting for phone page to load")
     dropdown = page.locator('[data-testid="country-select-searchable"]')

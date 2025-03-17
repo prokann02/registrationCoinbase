@@ -5,17 +5,6 @@ import string
 import phonenumbers
 
 from config import FIRST_NAMES, LAST_NAMES
-from config import LOG_FILE
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
 
 async def generate_random_password(length=8):
@@ -37,6 +26,8 @@ async def get_phone_code_number(phone_number):
 
 async def generate_user_data(phone_number):
     """Generates user data: first name, last name, password and returns them along with the phone number."""
+    logger = logging.getLogger()
+
     first_name = random.choice(FIRST_NAMES)
     last_name = random.choice(LAST_NAMES)
     password = await generate_random_password()

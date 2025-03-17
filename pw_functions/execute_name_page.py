@@ -2,25 +2,17 @@ import asyncio
 import logging
 import random
 
-from playwright.async_api import Page, Browser
+from playwright.async_api import Page
 
-from config import LOG_FILE, SECONDS_TIMEOUT
+from config import SECONDS_TIMEOUT
 from helpers.save_screenshot import save_screenshot
 from pw_functions.click_on_continue_button import click_on_continue_button
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
 
 async def execute_name_page(page: Page, user_data):
     """Fill out the page with the first and last name."""
+    logger = logging.getLogger()
+
     logger.info("Fill out the page with the first and last name")
 
     # Field for first name

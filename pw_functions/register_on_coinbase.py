@@ -4,7 +4,8 @@ import sys
 
 from playwright.async_api import Page, Browser
 
-from config import LOG_FILE, SECONDS_TIMEOUT
+from config import SECONDS_TIMEOUT
+from helpers.get_proxy import search_oops_page
 from helpers.get_temp_email import get_temp_email
 from helpers.save_screenshot import save_screenshot
 from pw_functions.execute_email_page import execute_email_page
@@ -12,26 +13,24 @@ from pw_functions.execute_home_page_and_open_login import execute_home_page_and_
 from pw_functions.execute_name_page import execute_name_page
 from pw_functions.execute_password_page import execute_password_page
 from pw_functions.execute_phone_page import execute_phone_page
+from pw_functions.pw_run import pw_run
 from pw_functions.search_person_script import search_person_script
 from pw_functions.search_welcome_script import search_welcome_script
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
-
-async def register_on_coinbase(browser: Browser, user_data, email, page: Page, proxy_file, temp_mail_api_key, captcha_api_key):
+async def register_on_coinbase(browser: Browser, user_data, email, page: Page, proxy_file, temp_mail_api_key,
+                               captcha_api_key):
     """Register on Coinbase using generated data and temporary email."""
+    logger = logging.getLogger()
+
     try:
         await execute_home_page_and_open_login(page=page)
 
         await search_welcome_script(page=page)
+
+        if await search_oops_page(page=page, browser=browser):
+            await pw_run(proxy_file, user_data, email, temp_mail_api_key, captcha_api_key)
+            return
 
         await execute_email_page(
             email=email,
@@ -39,6 +38,10 @@ async def register_on_coinbase(browser: Browser, user_data, email, page: Page, p
         )
 
         await search_person_script(page=page)
+
+        if await search_oops_page(page=page, browser=browser):
+            await pw_run(proxy_file, user_data, email, temp_mail_api_key, captcha_api_key)
+            return
 
         # Wait for the transition to the code entry stage
         code_container = page.locator('[data-testid="code-inputs-container"]')
@@ -68,6 +71,10 @@ async def register_on_coinbase(browser: Browser, user_data, email, page: Page, p
             await code_inputs[i].type(digit, delay=random.uniform(100, 300))  # Delay in ms
 
         await save_screenshot(text="entering the code in the second page", page=page)
+
+        if await search_oops_page(page=page, browser=browser):
+            await pw_run(proxy_file, user_data, email, temp_mail_api_key, captcha_api_key)
+            return
 
         await execute_password_page(
             user_data=user_data,

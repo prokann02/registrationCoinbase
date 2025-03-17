@@ -2,26 +2,17 @@ import asyncio
 import logging
 import random
 
-from playwright.async_api import Page, Browser
+from playwright.async_api import Page
 
-from config import LOG_FILE
 from config import SECONDS_TIMEOUT, COINBASE_MAIN_URL
 from helpers.save_screenshot import save_screenshot
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
 
 
 async def execute_home_page_and_open_login(page: Page):
     """Visit the main page for cookies and 'humanity'.
     Then open button 'Sign Up'."""
+
+    logger = logging.getLogger()
 
     logger.info("Visit the Coinbase homepage")
 

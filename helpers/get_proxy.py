@@ -3,19 +3,10 @@ import logging
 import sys
 
 import requests
+from playwright.async_api import Page
 
-from config import SELECTED_AGENT, LOG_FILE
-
-# Logging setup
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger()
+from config import SELECTED_AGENT
+from helpers.save_screenshot import save_screenshot
 
 PROXIES = None
 proxy_cycle = None
@@ -49,6 +40,8 @@ class SelectedProxy:
 
 async def get_proxy(proxy_file):
     """Finds a working proxy from the list."""
+    logger = logging.getLogger()
+
     global PROXIES, proxy_cycle, _SELECTED_PROXY
 
     with open(proxy_file, 'r') as f:
@@ -108,3 +101,39 @@ def get_selected_proxy():
     if _SELECTED_PROXY is None:
         raise ValueError("Proxy not initialized yet. Call get_proxy first.")
     return _SELECTED_PROXY
+
+
+async def search_oops_page(page: Page, browser):
+    logger = logging.getLogger(__name__)
+
+    # Check for "Oops" text variations
+    oops_text = page.locator(
+        "xpath=//*[contains(text(), 'Oops')]"
+    )
+
+    not_found = "Did not find 'Welcome' or 'Oops' text, continuing"
+
+    try:
+        await oops_text.wait_for(timeout=5_000)  # 5 seconds timeout
+        if await oops_text.is_visible():
+            logger.info("Found 'Oops' text on the page - possible human verification")
+            # Optionally save screenshot for debugging
+            await save_screenshot(text="found 'Oops' page", page=page)
+
+            if _SELECTED_PROXY is not None:
+                old_proxy = _SELECTED_PROXY.current
+                new_proxy = _SELECTED_PROXY.next()
+                logger.info(f"Switching proxy from {old_proxy} to {new_proxy}")
+
+                await browser.close()
+                return 1
+
+            else:
+                logger.warning("No proxy available to switch to")
+                exit(1)
+        else:
+            logger.info(not_found)
+            return None
+    except Exception:
+        logger.info(not_found)
+        return None
