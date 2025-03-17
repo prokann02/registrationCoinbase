@@ -1,9 +1,10 @@
 <h1>COINBASE AUTOMATED REGISTRATION</h1>
 <hr>
-This is a Python application built with Playwright designed to automate the registration process on Coinbase. It allows users to streamline account creation by leveraging Playwright's browser automation capabilities. 
+<p>This is a Python application built with Playwright designed to automate the registration process on Coinbase. It allows users to streamline account creation by leveraging Playwright's browser automation capabilities. </p>
 
-The application supports custom proxies and <b>requires</b> credentials for 2Captcha to handle CAPTCHA challenges during registration and Temp Mail credentials to get code.
+<p>The application supports custom proxies and <b>requires</b> credentials for 2Captcha to handle CAPTCHA challenges during registration and Temp Mail credentials to get code.</p>
 
+<p><b>Important</b>: This application does not handle phone number verification (you can write the code manually). Instead, it demonstrates how the registration process can be automated while bypassing CAPTCHA and email verification hurdles.</p>
 
 <hr>
 <h2>How to Run</h2>
@@ -42,7 +43,6 @@ python main.py --phone-number +380000000000 --captcha-key 000000aa0a000f000c0e00
 ```
 <hr>
 <h3>How it works:</h3>
-<video width="600" controls>
-  <source src="readme_sources/video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+
+[![Demo](readme_sources/preview.png)](https://youtu.be/2biH7M1PRKA)
+
