@@ -2,7 +2,7 @@ import logging
 import random
 import sys
 
-from playwright.async_api import Page, Browser
+from playwright.async_api import Page, Browser, async_playwright
 
 from config import SECONDS_TIMEOUT
 from helpers.get_proxy import search_oops_page
@@ -13,9 +13,26 @@ from pw_functions.execute_home_page_and_open_login import execute_home_page_and_
 from pw_functions.execute_name_page import execute_name_page
 from pw_functions.execute_password_page import execute_password_page
 from pw_functions.execute_phone_page import execute_phone_page
-from pw_functions.pw_run import pw_run
 from pw_functions.search_person_script import search_person_script
 from pw_functions.search_welcome_script import search_welcome_script
+from pw_functions.start_browser import start_browser
+
+
+async def pw_run(proxy_file, user_data, email, temp_mail_api_key, captcha_api_key):
+    async with async_playwright() as playwright:
+        browser, page = await start_browser(playwright, proxy_file=proxy_file)
+
+        await register_on_coinbase(
+            browser=browser,
+            user_data=user_data,
+            email=email,
+            page=page,
+            proxy_file=proxy_file,
+            temp_mail_api_key=temp_mail_api_key,
+            captcha_api_key=captcha_api_key,
+        )
+
+        await browser.close()
 
 
 async def register_on_coinbase(browser: Browser, user_data, email, page: Page, proxy_file, temp_mail_api_key,

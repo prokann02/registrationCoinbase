@@ -67,13 +67,13 @@ async def is_captcha_present(page: Page) -> bool:
         captcha_iframe = page.locator(
             "xpath=//iframe[contains(@src, 'arkoselabs') or contains(@src, 'recaptcha') or contains(@src, 'hcaptcha')]"
         )
-        await captcha_iframe.wait_for(timeout=3_000)  # 3 seconds in ms
+        await captcha_iframe.wait_for(timeout=3_000)
         return True
     except Exception:
         return False
 
 
-async def solve_arkose_captcha(page: Page, captcha_api_key: str) -> bool:
+async def solve_arkose_captcha(page: Page, captcha_api_key: str) -> bool | None:
     """Solve Arkose Labs/FunCAPTCHA."""
     try:
         # Locate the outer iframe

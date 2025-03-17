@@ -9,7 +9,7 @@ from helpers.generate_user_data import generate_user_data
 from helpers.get_input_phone_number import get_input_phone_number
 from helpers.get_proxy import get_proxy
 from helpers.init_args import init_args
-from pw_functions.pw_run import pw_run
+from pw_functions.register_on_coinbase import pw_run
 
 # Logging setup
 log_file = os.path.join(LOG_DIR, "program.log")
