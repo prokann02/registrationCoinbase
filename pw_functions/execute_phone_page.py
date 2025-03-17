@@ -58,3 +58,7 @@ async def execute_phone_page(page: Page, phone_number: str, country_code: str, c
 
     if await solve_captcha(page=page, captcha_api_key=captcha_api_key):
         logger.info("Captcha after entering phone solved")
+
+    await asyncio.sleep(random.uniform(1, 2))
+    logger.info("All finished!")
+    await asyncio.sleep(5)

@@ -40,7 +40,7 @@ async def start_browser(playwright: Playwright, proxy_file) -> tuple[Browser, Pa
 
         # Create a new page
         page = await browser.new_page(
-            viewport={"width": 1340, "height": 768},
+            viewport={"width": 1340, "height": 800},
             extra_http_headers={
                 "Accept-Language": "en-US,en;q=0.9"
             },
