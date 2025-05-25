@@ -8,13 +8,20 @@
 
 <hr>
 <h2>How to Run</h2>
-<p><b>1. Install Dependencies:</b></p>
+<p><b>1. Clone the repository.</b></p>
+
+```
+git clone https://github.com/prokann02/registrationCoinbase.git
+cd registrationCoinbase
+```
+
+<p><b>2. Install Dependencies:</b></p>
 
 ```
 pip install -r requirements.txt
 ```
 
-<p><b>2. Install Playwright.</b></p>
+<p><b>3. Install Playwright.</b></p>
 <p>On Windows:</p>
 
 ```
@@ -27,7 +34,7 @@ playwright install
 playwright install-deps
 ```
 
-<p><b>3. Configure Arguments.</b></p>
+<p><b>4. Configure Arguments.</b></p>
 <p>The application requires <a href="https://2captcha.com/uk/enterpage">2Captcha</a> API key, <a href="https://temp-mail.org/uk/api">temp mail</a> API key, phone number and optionally supports proxy settings.</p> 
 <p>All arguments:</p>
 
